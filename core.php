@@ -93,15 +93,6 @@ function wp_pagenavi( $args = array() ) {
 				$out .= "<span class='{$class_names['pages']}'>$pages_text</span>";
 			}
 
-			if ( $start_page >= 2 && $pages_to_show < $total_pages ) {
-				// First
-				$first_text = str_replace( '%TOTAL_PAGES%', number_format_i18n( $total_pages ), __( $options['first_text'], 'wp-pagenavi' ) );
-				$out .= $instance->get_single( 1, $first_text, array(
-					'class' => $class_names['first'],
-					'aria-label' => __('First Page'),
-				), '%TOTAL_PAGES%' );
-			}
-
 			// Previous
 			if ( $paged > 1 && !empty( $options['prev_text'] ) ) {
 				$out .= $instance->get_single( $paged - 1, $options['prev_text'], array(
@@ -109,6 +100,15 @@ function wp_pagenavi( $args = array() ) {
 					'rel'   => 'prev',
 					'aria-label' => __('Previous Page'),
 				) );
+			}
+
+			if ( $start_page >= 2 && $pages_to_show < $total_pages ) {
+				// First
+				$first_text = str_replace( '%TOTAL_PAGES%', number_format_i18n( $total_pages ), __( $options['first_text'], 'wp-pagenavi' ) );
+				$out .= $instance->get_single( 1, $first_text, array(
+					'class' => $class_names['first'],
+					'aria-label' => __('First Page'),
+				), '%TOTAL_PAGES%' );
 			}
 
 			if ( $start_page >= 2 && $pages_to_show < $total_pages ) {
@@ -174,6 +174,14 @@ function wp_pagenavi( $args = array() ) {
 					$out .= "<span class='{$class_names['extend']}'>{$options['dotright_text']}</span>";
 			}
 
+			if ( $end_page < $total_pages ) {
+				// Last
+				$out .= $instance->get_single( $total_pages, __( $options['last_text'], 'wp-pagenavi' ), array(
+					'class' => $class_names['last'],
+					'aria-label' => __('Last Page'),
+				), '%TOTAL_PAGES%' );
+			}
+
 			// Next
 			if ( $paged < $total_pages && !empty( $options['next_text'] ) ) {
 				$out .= $instance->get_single( $paged + 1, $options['next_text'], array(
@@ -181,14 +189,6 @@ function wp_pagenavi( $args = array() ) {
 					'rel'   => 'next',
 					'aria-label' => __('Next Page'),
 				) );
-			}
-
-			if ( $end_page < $total_pages ) {
-				// Last
-				$out .= $instance->get_single( $total_pages, __( $options['last_text'], 'wp-pagenavi' ), array(
-					'class' => $class_names['last'],
-					'aria-label' => __('Last Page'),
-				), '%TOTAL_PAGES%' );
 			}
 			break;
 
